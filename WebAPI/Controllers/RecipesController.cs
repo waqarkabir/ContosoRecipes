@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -11,19 +12,25 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult GetRecipes([FromQuery] int count)
         {
-            string[] recipes = { "Pizza", "Curry", "Oxtail"};
+            Recipe[] recipes = {
+                new Recipe() {Title = "Pizza"},
+                new Recipe() {Title = "Curry"},
+                new Recipe() {Title = "Oxtail"}
+            };
             if (!recipes.Any())
                 return NotFound();
             return Ok(recipes.Take(count));
         }
 
         [HttpPost]
-        public IActionResult CreateRecipe()
+        public IActionResult CreateRecipe([FromBody] Recipe newRecipe)
         {
-            if (!ModelState.IsValid)
+            //validate and then save data to the database
+            bool badThingsHappened = false;
+            if (badThingsHappened)
                 return BadRequest();
 
-            return Created("", new {});
+            return Created("", newRecipe);
         }
 
         [HttpDelete("{id}")]
