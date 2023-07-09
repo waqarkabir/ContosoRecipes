@@ -9,12 +9,12 @@ namespace WebAPI.Controllers
     public class RecipesController : ControllerBase
     {
         [HttpGet]
-        public IActionResult GetRecipes()
+        public IActionResult GetRecipes([FromQuery] int count)
         {
             string[] recipes = { "Pizza", "Curry", "Oxtail"};
             if (!recipes.Any())
                 return NotFound();
-            return Ok(recipes);
+            return Ok(recipes.Take(count));
         }
 
         [HttpPost]
