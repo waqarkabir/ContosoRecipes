@@ -8,10 +8,12 @@ namespace WebAPI.Controllers
     public class RecipesController : ControllerBase
     {
         [HttpGet]
-        public string[] GetRecipes()
+        public IActionResult GetRecipes()
         {
             string[] recipes = { "Pizza", "Curry", "Oxtail"};
-            return recipes;
+            if (recipes.Any())
+                return NotFound();
+            return Ok(recipes);
         }
     }
 }
