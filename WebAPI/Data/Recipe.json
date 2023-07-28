@@ -1,0 +1,36 @@
+{
+  "_id": {
+    "$oid": "64ac0889a356de8189978a29"
+  },
+  "Created": {
+    "$date": "2021-06-20T00:00:00.000Z"
+  },
+  "Description": "Ina Garten: Barefoot Contessa Back to Basics",
+  "Directions": [
+    "Preheat the oven to 425 degrees F.",
+    "Defrost shrimp by putting in cold water, then drain and toss with oil, salt, and pepper. ",
+    "Place in oven-safe dish and allow to sit at room temperature while you make the butter and garlic mixture."
+  ],
+  "RecipeId": "D5D5A5",
+  "Tags": [
+    "seafood",
+    "shrimp",
+    "main"
+  ],
+  "Title": "Baked Shrimp Scampi",
+  "Updated": {
+    "$date": "2023-07-10T00:00:00.000Z"
+  },
+  "Ingredients": [
+    {
+      "Name": "all purpose flour",
+      "Amount": "4",
+      "Unit": "cups"
+    },
+    {
+      "Name": "butter",
+      "Amount": "1",
+      "Unit": "cup"
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -9,47 +10,70 @@ namespace WebAPI.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetRecipes([FromQuery] int count)
+        private readonly RecipeServiceMongoDB _recipeService;
+        public RecipesController(RecipeServiceMongoDB recipeService)
         {
-            Recipe[] recipes = {
-                new Recipe() {Title = "Pizza"},
-                new Recipe() {Title = "Curry"},
-                new Recipe() {Title = "Oxtail"}
-            };
+            _recipeService = recipeService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRecipes()
+        {
+            var recipes = await _recipeService.GetRandomAsync();
             if (!recipes.Any())
                 return NotFound();
-            return Ok(recipes.Take(count));
+            return Ok(recipes);
         }
 
-        [HttpPost]
-        public IActionResult CreateRecipe([FromBody] Recipe newRecipe)
-        {
-            //validate and then save data to the database
-            bool badThingsHappened = false;
-            if (badThingsHappened)
-                return BadRequest();
+        //[HttpGet]
+        //public async Task<ActionResult<Recipe>> GetRecipe(string id)
+        //{
+        //    var recipe = await _recipeService.GetAsync(id);
 
-            return Created("", newRecipe);
-        }
+        //    if (recipe is null)
+        //    {
+        //        return NotFound();
+        //    }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteRecipes(int id) 
-        {
-            bool badThingsHappened = false;
-            if (badThingsHappened)
-                return BadRequest();
+        //    return Ok(recipe);
+        //}
 
-            return NoContent();
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateRecipe([FromBody] Recipe newRecipe)
+        //{
+        //    //validate and then save data to the database
+        //    if (!ModelState.IsValid)
+        //        return BadRequest();
 
-        [HttpPut]
-        public IActionResult EditRecipe()
-        {
-            if (!ModelState.IsValid)
-                return NotFound();
+        //    await _recipeService.CreateAsync(newRecipe);
 
-            return NoContent();
-        }
+        //    return Created("", newRecipe);
+        //}
+
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteRecipe(string id) 
+        //{
+        //    var recipe = _recipeService.GetAsync(id);
+        //    if (recipe is null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    await _recipeService.RemoveAsync(id);
+        //    return NoContent();
+        //}
+
+        //[HttpPut]
+        //public async Task<IActionResult> EditRecipe([FromBody]  Recipe updatedRecipe)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest();
+
+        //    var recipe = _recipeService.GetAsync(updatedRecipe.Id);
+        //    if (recipe is null)
+        //        return NotFound();
+
+        //    await _recipeService.UpdateAsync(updatedRecipe.Id, updatedRecipe);
+        //    return NoContent();
+        //}
     }
 }

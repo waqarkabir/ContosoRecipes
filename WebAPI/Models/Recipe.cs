@@ -1,13 +1,31 @@
-﻿namespace WebAPI.Models
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+
+namespace WebAPI.Models
 {
-    public record Recipe
+ 
+    public class Recipe
     {
-        public string Title { get; init; }
-        public string Description { get; init; }
-        public IEnumerable<string> Directions { get; init; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
-        public IEnumerable<string> Ingredients { get; init; }
+        public string RecipeId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public IEnumerable<string> Directions { get; set; }
 
-        public DateTime Updated { get; init; }
+        public IEnumerable<string> Tags { get; set; }
+
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+        public IEnumerable<Ingredient> Ingredients { get; set; }
     }
+        public record Ingredient
+        {
+        public required string Name { get; init; }
+        public string Amount { get; init; }
+        public string Unit { get; init; }
+    }
+
 }
