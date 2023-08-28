@@ -38,17 +38,17 @@ namespace WebAPI.Controllers
         //    return Ok(recipe);
         //}
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateRecipe([FromBody] Recipe newRecipe)
-        //{
-        //    //validate and then save data to the database
-        //    if (!ModelState.IsValid)
-        //        return BadRequest();
+        [HttpPost]
+        public async Task<IActionResult> CreateRecipe([FromBody] Recipe newRecipe)
+        {
+            //validate and then save data to the database
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-        //    await _recipeService.CreateAsync(newRecipe);
+            await _recipeService.CreateAsync(newRecipe);
 
-        //    return Created("", newRecipe);
-        //}
+            return Created("", newRecipe);
+        }
 
         //[HttpDelete("{id}")]
         //public async Task<IActionResult> DeleteRecipe(string id) 
