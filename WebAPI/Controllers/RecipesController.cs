@@ -25,18 +25,18 @@ namespace WebAPI.Controllers
             return Ok(recipes);
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<Recipe>> GetRecipe(string id)
-        //{
-        //    var recipe = await _recipeService.GetAsync(id);
+        [HttpGet("Id")]
+        public async Task<ActionResult<Recipe>> GetRecipe(string id)
+        {
+            var recipe = await _recipeService.GetAsync(id);
 
-        //    if (recipe is null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (recipe is null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(recipe);
-        //}
+            return Ok(recipe);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateRecipe([FromBody] RecipeCreateVM recipeVM)
@@ -75,16 +75,16 @@ namespace WebAPI.Controllers
         //}
 
         //[HttpPut]
-        //public async Task<IActionResult> EditRecipe([FromBody]  Recipe updatedRecipe)
+        //public async Task<IActionResult> EditRecipe([FromBody] Recipe updatedRecipe)
         //{
         //    if (!ModelState.IsValid)
         //        return BadRequest();
 
-        //    var recipe = _recipeService.GetAsync(updatedRecipe.Id);
+        //    var recipe = _recipeService.GetRandomAsync(updatedRecipe._Id);
         //    if (recipe is null)
         //        return NotFound();
 
-        //    await _recipeService.UpdateAsync(updatedRecipe.Id, updatedRecipe);
+        //    await _recipeService.UpdateAsync(updatedRecipe._Id, updatedRecipe);
         //    return NoContent();
         //}
     }
