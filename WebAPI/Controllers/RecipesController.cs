@@ -39,15 +39,27 @@ namespace WebAPI.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> CreateRecipe([FromBody] Recipe newRecipe)
+        public async Task<IActionResult> CreateRecipe([FromBody] RecipeCreateVM recipeVM)
         {
             //validate and then save data to the database
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _recipeService.CreateAsync(newRecipe);
+            Recipe recipe = new() 
+            {
+              Created = recipeVM.Created,
+              Description = recipeVM.Description,
+              Directions = recipeVM.Directions,
+              Ingredients = recipeVM.Ingredients,
+              RecipeId = recipeVM.RecipeId,
+              Tags = recipeVM.Tags,
+              Title = recipeVM.Title
+            };
 
-            return Created("", newRecipe);
+
+            await _recipeService.CreateAsync(recipe);
+
+            return Created("", recipe);
         }
 
         //[HttpDelete("{id}")]
