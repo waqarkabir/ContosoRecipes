@@ -4,12 +4,8 @@ using MongoDB.Bson;
 namespace WebAPI.Models
 {
  
-    public class Recipe
-    {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? _Id { get; set; }
-
+    public class RecipeCreateVM
+	{
         public string RecipeId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -21,5 +17,6 @@ namespace WebAPI.Models
         public DateTime Updated { get; set; }
         public IEnumerable<Ingredient> Ingredients { get; set; }
     }
+
 
 }
