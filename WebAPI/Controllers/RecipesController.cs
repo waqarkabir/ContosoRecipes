@@ -25,55 +25,55 @@ namespace WebAPI.Controllers
             return Ok(recipes);
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<Recipe>> GetRecipe(string id)
-        //{
-        //    var recipe = await _recipeService.GetAsync(id);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Recipe>> GetRecipe(string id)
+        {
+            var recipe = await _recipeService.GetAsync(id);
 
-        //    if (recipe is null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (recipe is null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(recipe);
-        //}
+            return Ok(recipe);
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateRecipe([FromBody] Recipe newRecipe)
-        //{
-        //    //validate and then save data to the database
-        //    if (!ModelState.IsValid)
-        //        return BadRequest();
+        [HttpPost]
+        public async Task<IActionResult> CreateRecipe([FromBody] Recipe newRecipe)
+        {
+            //validate and then save data to the database
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-        //    await _recipeService.CreateAsync(newRecipe);
+            await _recipeService.CreateAsync(newRecipe);
 
-        //    return Created("", newRecipe);
-        //}
+            return Created("", newRecipe);
+        }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteRecipe(string id) 
-        //{
-        //    var recipe = _recipeService.GetAsync(id);
-        //    if (recipe is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    await _recipeService.RemoveAsync(id);
-        //    return NoContent();
-        //}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRecipe(string id)
+        {
+            var recipe = _recipeService.GetAsync(id);
+            if (recipe is null)
+            {
+                return NotFound();
+            }
+            await _recipeService.RemoveAsync(id);
+            return NoContent();
+        }
 
-        //[HttpPut]
-        //public async Task<IActionResult> EditRecipe([FromBody]  Recipe updatedRecipe)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest();
+        [HttpPut]
+        public async Task<IActionResult> EditRecipe([FromBody] Recipe updatedRecipe)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-        //    var recipe = _recipeService.GetAsync(updatedRecipe.Id);
-        //    if (recipe is null)
-        //        return NotFound();
+            var recipe = _recipeService.GetAsync(updatedRecipe.Id);
+            if (recipe is null)
+                return NotFound();
 
-        //    await _recipeService.UpdateAsync(updatedRecipe.Id, updatedRecipe);
-        //    return NoContent();
-        //}
+            await _recipeService.UpdateAsync(updatedRecipe.Id, updatedRecipe);
+            return NoContent();
+        }
     }
 }

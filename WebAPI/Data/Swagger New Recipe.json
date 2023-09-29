@@ -1,0 +1,25 @@
+{
+  "id": "64ac0889a356de8189978a30",
+  "recipeId": "D5D5A6",
+  "title": "Pakorey",
+  "description": "Ina Garten: Barefoot Contessa Back to Basics",
+  "directions": [
+    "Preheat the oven to 425 degrees F.",
+    "Defrost shrimp by putting in cold water, then drain and toss with oil, salt, and pepper. ",
+    "Place in oven-safe dish and allow to sit at room temperature while you make the butter and garlic mixture."
+  ],
+  "tags": [
+    "seafood",
+    "shrimp",
+    "main"
+  ],
+  "created": "2023-09-29T03:09:20.320Z",
+  "updated": "2023-09-29T03:09:20.320Z",
+  "ingredients": [
+    {
+      "name": "butter",
+      "amount": "2",
+      "unit": "cup"
+    }
+  ]
+}

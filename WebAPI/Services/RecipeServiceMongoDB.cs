@@ -25,15 +25,15 @@ public class RecipeServiceMongoDB
         //.Limit(count)
         .ToListAsync();
 
-    //public async Task<Recipe?> GetAsync(string id) =>
-    //    await _recipesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+    public async Task<Recipe?> GetAsync(string id) =>
+        await _recipesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
     public async Task CreateAsync(Recipe newRecipe) =>
         await _recipesCollection.InsertOneAsync(newRecipe);
 
-    //public async Task UpdateAsync(string id, Recipe updatedRecipe) =>
-    //    await _recipesCollection.ReplaceOneAsync(x => x.Id == id, updatedRecipe);
+    public async Task UpdateAsync(string id, Recipe updatedRecipe) =>
+        await _recipesCollection.ReplaceOneAsync(x => x.Id == id, updatedRecipe);
 
-    //public async Task RemoveAsync(string id) =>
-    //    await _recipesCollection.DeleteOneAsync(x => x.Id == id);
+    public async Task RemoveAsync(string id) =>
+        await _recipesCollection.DeleteOneAsync(x => x.Id == id);
 }
