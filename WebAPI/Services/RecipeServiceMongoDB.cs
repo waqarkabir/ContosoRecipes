@@ -25,7 +25,7 @@ public class RecipeServiceMongoDB
         //.Limit(count)
         .ToListAsync();
 
-    public async Task<Recipe?> GetAsync(string id) =>
+    public async Task<Recipe> GetAsync(string id) =>
         await _recipesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
     public async Task CreateAsync(Recipe newRecipe) =>
