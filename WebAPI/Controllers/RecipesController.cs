@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Recipe>> GetRecipe([FromQuery]string id)
+        public async Task<ActionResult<Recipe>> GetRecipe(string id)
         {
             var recipe = await _recipeService.GetAsync(id);
 
