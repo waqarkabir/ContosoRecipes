@@ -29,6 +29,10 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Recipe>> GetRecipe(string id)
         {
+            if (id.Length < 24)
+            {
+                throw new ArgumentException("length of id should be 24");
+            }
             var recipe = await _recipeService.GetAsync(id);
 
             if (recipe is null)
