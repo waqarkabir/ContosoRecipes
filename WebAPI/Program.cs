@@ -1,5 +1,6 @@
 
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using WebAPI.Models;
 using WebAPI.Services;
 
@@ -24,7 +25,23 @@ namespace WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c => 
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ContosoRecipes" , Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                {
+                    Title = "Contoso Recipe API" ,
+                    Description = "Sample ASP.Net Core Web API that allows you work with recipe data",
+                    Contact = new OpenApiContact 
+                    {
+                        Name = "Code With Mind",
+                        Url = new Uri("https://www.codewithmind.com")
+                    },
+                    Version = "v1"
+                });
+
+                //generate the xml docs that'll drive the swagger docs
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory,xmlFile);
+
+                c.IncludeXmlComments(xmlPath);
             }).AddSwaggerGenNewtonsoftSupport();
 
             var app = builder.Build();

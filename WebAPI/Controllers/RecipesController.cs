@@ -2,12 +2,16 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using System.Net.Mime;
 using WebAPI.Models;
 using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
     [ApiController]
     public class RecipesController : ControllerBase
     {
@@ -16,8 +20,13 @@ namespace WebAPI.Controllers
         {
             _recipeService = recipeService;
         }
-
+        /// <summary>
+        ///  Returns all available recipes
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetRecipes()
         {
             var recipes = await _recipeService.GetRandomAsync();
@@ -25,7 +34,12 @@ namespace WebAPI.Controllers
                 return NotFound();
             return Ok(recipes);
         }
-
+        /// <summary>
+        /// Returns a recipe for a given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         [HttpGet("{id}")]
         public async Task<ActionResult<Recipe>> GetRecipe(string id)
         {
@@ -43,6 +57,11 @@ namespace WebAPI.Controllers
             return Ok(recipe);
         }
 
+        /// <summary>
+        /// Creates a new recipe
+        /// </summary>
+        /// <param name="newRecipe"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateRecipe([FromBody] Recipe newRecipe)
         {
@@ -54,6 +73,12 @@ namespace WebAPI.Controllers
 
             return Created("", newRecipe);
         }
+
+        /// <summary>
+        /// Removes a recipe with the given id if matched
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRecipe(string id)
@@ -67,6 +92,11 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Updates a recipe
+        /// </summary>
+        /// <param name="updatedRecipe"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> EditRecipe([FromBody] Recipe updatedRecipe)
         {
@@ -81,6 +111,12 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Updates a specific attribute of a recipe
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="recipeUpdates"></param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
         public async Task<IActionResult> EditRecipe(string id, JsonPatchDocument<Recipe> recipeUpdates)
         {  
