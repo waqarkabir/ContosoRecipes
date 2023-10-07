@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebAPI.Services;
@@ -26,7 +27,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Recipe>> GetRecipe(string id)
+        public async Task<ActionResult<Recipe>> GetRecipe([FromQuery]string id)
         {
             var recipe = await _recipeService.GetAsync(id);
 
@@ -73,6 +74,17 @@ namespace WebAPI.Controllers
                 return NotFound();
 
             await _recipeService.UpdateAsync(updatedRecipe.Id, updatedRecipe);
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> EditRecipe(string id, JsonPatchDocument<Recipe> recipeUpdates)
+        {  
+            var recipe = await _recipeService.GetAsync(id);
+            if (recipe is null)
+                return NotFound(); 
+            recipeUpdates.ApplyTo(recipe);
+            await _recipeService.UpdateAsync(id, recipe);
             return NoContent();
         }
     }
