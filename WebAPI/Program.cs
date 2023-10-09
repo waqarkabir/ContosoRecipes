@@ -1,5 +1,6 @@
 
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using WebAPI.Models;
 using WebAPI.Services;
@@ -42,6 +43,12 @@ namespace WebAPI
                 var xmlPath = Path.Combine(AppContext.BaseDirectory,xmlFile);
 
                 c.IncludeXmlComments(xmlPath);
+
+                c.CustomOperationIds(apidescription =>
+                {
+                    return apidescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
+                });
+
             }).AddSwaggerGenNewtonsoftSupport();
 
             var app = builder.Build();
@@ -50,7 +57,11 @@ namespace WebAPI
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContosoRecipes v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContosoRecipes v1");
+                    c.DisplayOperationId();
+                });
             }
             else { 
                 app.UseExceptionHandler("/error");
